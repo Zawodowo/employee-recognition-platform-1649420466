@@ -58,7 +58,7 @@ class KudosController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_kudo
     @kudo = Kudo.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
+  rescue ActiveRecord::RecordNotFound 
     redirect_to kudos_path, notice: "This kudo doesn't exists."
     @kudo_giver_id = nil
   end
