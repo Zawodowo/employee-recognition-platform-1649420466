@@ -1,4 +1,6 @@
 class Kudo < ApplicationRecord
-  belongs_to :giver
-  belongs_to :reciver
+  belongs_to :giver, class_name: 'Employee'
+  belongs_to :reciver, class_name: 'Employee'
+
+  validates :title, :content, presence: true
 end

@@ -12,12 +12,12 @@
 
 <p>
   <strong>Giver:</strong>
-  <%= @kudo.giver_id %>
+  <%= @kudo.giver.email %>
 </p>
 
 <p>
   <strong>Reciver:</strong>
-  <%= @kudo.reciver_id %>
+  <%= @kudo.reciver.email %>
 </p>
 
 <%= link_to 'Edit', edit_kudo_path(@kudo) %> |
