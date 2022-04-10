@@ -1,5 +1,6 @@
 class KudosController < ApplicationController
   before_action :set_kudo, only: %i[show edit update destroy]
+  before_action :correct_employee, only: [:edit, :update, :destroy]
 
   # GET /kudos
   def index
@@ -44,11 +45,26 @@ class KudosController < ApplicationController
     redirect_to kudos_url, notice: 'Kudo was successfully destroyed.'
   end
 
+  def correct_employee
+    @curr_employee_id = current_employee.id
+
+    @kudo_giver_id = Kudo.find(params[:id]).giver_id
+
+    if @curr_employee_id != @kudo_giver_id
+      redirect_to kudos_path, notice: "You didn't give that kudo."
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_kudo
-    @kudo = Kudo.find(params[:id])
+    begin
+      @kudo = Kudo.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      redirect_to kudos_path, notice: "This kudo doesn't exists."
+      @kudo_giver_id = nil
+    end
   end
 
   # Only allow a list of trusted parameters through.
